@@ -42,6 +42,7 @@ function TaskCard({
     return (
       <div className="task-card">
         <input
+          disabled={isSubmitting}
           className="checkbox"
           type="checkbox"
           name="task-checkbox"
@@ -57,7 +58,7 @@ function TaskCard({
           {task}{" "}
         </span>
         <button
-        disabled={isSubmitting}
+          disabled={isSubmitting}
           onClick={() => {
             handleEdit();
           }}
@@ -65,7 +66,7 @@ function TaskCard({
           Edit
         </button>
         <button
-        disabled={isSubmitting}
+          disabled={isSubmitting}
           onClick={() => {
             deleteTask(id);
           }}
@@ -90,6 +91,7 @@ function TaskCard({
         <input
           className="task-text-input"
           type="text"
+          name="task-edit-input"
           value={editedTask}
           onChange={(e) => {
             setEditedTask(e.target.value);
@@ -109,7 +111,7 @@ function TaskCard({
           Save
         </button>
         <button
-        disabled={isSubmitting}
+          disabled={isSubmitting}
           onClick={() => {
             handleCancel();
           }}

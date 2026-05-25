@@ -47,10 +47,10 @@ function App() {
     try {
       setIsSubmitting(true);
 
-      const result = await createTodo(newTask);
+      await createTodo(newTask);
 
       const task: ITask = {
-        id: result.id,
+        id: Date.now(),
         task: newTask,
         isDone: false,
       };
