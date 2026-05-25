@@ -1,0 +1,22 @@
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.task-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 18px;
+  padding: 8px;
+}
+
+.task-text, .task-text-input {
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: break-word;
+}

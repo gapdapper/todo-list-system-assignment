@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+  width: min(500px, 90%);
+}
+
+.input-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.task-input {
+  width: 82%;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
