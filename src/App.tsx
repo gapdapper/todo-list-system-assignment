@@ -1,60 +1,139 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import TaskCard from "./components/TaskCard";
-import type { ITask } from "./types/Task";
+import type { ITask, ITaskResponse } from "./types/Task";
+import {
+  createTodo,
+  deleteTodo,
+  getTodos,
+  toggleTodo,
+  updateTodo,
+} from "./services/todoApi";
 
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
-  const [newTask, setNewTask] = useState<string>("");
+  const [newTask, setNewTask] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const addTask = (): void => {
-    if (newTask.trim() === "") return;
-    const task: ITask = {
-      id: Date.now(),
-      task: newTask,
-      isDone: false,
+  useEffect(() => {
+    const loadTodos = async () => {
+      try {
+        setLoading(true);
+
+        const data = await getTodos();
+
+        const mappedTodos = data.map((todo: ITaskResponse) => ({
+          id: todo.id,
+          task: todo.title,
+          isDone: todo.completed,
+        }));
+
+        setTaskList(mappedTodos);
+      } catch {
+        setError("Failed to load todo list");
+      } finally {
+        setLoading(false);
+      }
     };
-    setTaskList((prev) => [...prev, task]);
-    setNewTask("");
+
+    loadTodos();
+  }, []);
+
+  const addTask = async () => {
+    if (newTask.trim() === "") return;
+
+    try {
+      setIsSubmitting(true);
+
+      const result = await createTodo(newTask);
+
+      const task: ITask = {
+        id: result.id,
+        task: newTask,
+        isDone: false,
+      };
+      setTaskList((prev) => [...prev, task]);
+      setNewTask("");
+      setError("");
+    } catch {
+      setError("Failed to add new todo");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const setDone = (id: number) => {
-    setTaskList((prev) =>
-      prev.map((t) => {
-        const task =
+  const toggleTaskStatus = async (id: number, isDone: boolean) => {
+    try {
+      setIsSubmitting(true);
+
+      await toggleTodo(id, isDone);
+
+      setTaskList((prev) =>
+        prev.map((t) =>
           id === t.id
             ? {
                 ...t,
-                isDone: !t.isDone,
+                isDone: isDone,
               }
-            : t;
-        return task;
-      }),
-    );
+            : t,
+        ),
+      );
+      setError("");
+    } catch {
+      setError("Failed to set done todo");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const saveEditTask = (id: number, updatedTask: string) => {
-    setTaskList((prev) =>
-      prev.map((t) => {
-        const task =
+  const saveEditTask = async (id: number, updatedTask: string) => {
+    try {
+      setIsSubmitting(true);
+
+      await updateTodo(id, updatedTask);
+
+      setTaskList((prev) =>
+        prev.map((t) =>
           id === t.id
             ? {
                 ...t,
                 task: updatedTask,
               }
-            : t;
-        return task;
-      }),
-    );
+            : t,
+        ),
+      );
+
+      setError("");
+    } catch {
+      setError("Failed to edit task");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const removeTask = (id: number) => {
-    setTaskList((prev) =>
-      prev.filter((task) => {
-        return task.id != id;
-      }),
-    );
+  const deleteTask = async (id: number) => {
+    try {
+      setIsSubmitting(true);
+      await deleteTodo(id);
+
+      setTaskList((prev) => prev.filter((task) => task.id !== id));
+      setError("");
+    } catch {
+      setError("Failed to delete task");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="container">
+        <h1>Loading . . .</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
@@ -76,6 +155,7 @@ function App() {
             }}
           />
           <button
+            disabled={newTask.trim() === "" || isSubmitting}
             onClick={() => {
               addTask();
             }}
@@ -83,18 +163,20 @@ function App() {
             Add Task
           </button>
         </div>
+        {error && <p className="error-text">{error}</p>}
         <div className="task-list">
           {taskList.length != 0 &&
             taskList.map((task) => {
               return (
                 <TaskCard
                   key={task.id}
-                  setDone={setDone}
-                  removeTask={removeTask}
+                  toggleTaskStatus={toggleTaskStatus}
+                  deleteTask={deleteTask}
                   saveEditTask={saveEditTask}
                   id={task.id}
                   task={task.task}
                   isDone={task.isDone}
+                  isSubmitting={isSubmitting}
                 />
               );
             })}

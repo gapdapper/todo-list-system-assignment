@@ -3,3 +3,10 @@ export interface ITask {
   task: string;
   isDone: boolean;
 }
+
+export interface ITaskResponse {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}

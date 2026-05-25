@@ -3,18 +3,20 @@ import "./TaskCard.css";
 import type { ITask } from "../types/Task";
 
 interface TaskCardProps extends ITask {
-  setDone: (id: number) => void;
-  removeTask: (id: number) => void;
+  toggleTaskStatus: (id: number, isDone: boolean) => void;
+  deleteTask: (id: number) => void;
   saveEditTask: (id: number, task: string) => void;
+  isSubmitting: boolean;
 }
 
 function TaskCard({
   id,
   task,
   isDone,
-  setDone,
-  removeTask,
+  toggleTaskStatus,
+  deleteTask,
   saveEditTask,
+  isSubmitting,
 }: TaskCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState("");
@@ -44,8 +46,8 @@ function TaskCard({
           type="checkbox"
           name="task-checkbox"
           checked={isDone}
-          onChange={() => {
-            setDone(id);
+          onChange={(e) => {
+            toggleTaskStatus(id, e.target.checked);
           }}
         />{" "}
         <span
@@ -55,6 +57,7 @@ function TaskCard({
           {task}{" "}
         </span>
         <button
+        disabled={isSubmitting}
           onClick={() => {
             handleEdit();
           }}
@@ -62,8 +65,9 @@ function TaskCard({
           Edit
         </button>
         <button
+        disabled={isSubmitting}
           onClick={() => {
-            removeTask(id);
+            deleteTask(id);
           }}
         >
           X
@@ -79,8 +83,8 @@ function TaskCard({
           type="checkbox"
           name="task-checkbox"
           checked={isDone}
-          onChange={() => {
-            setDone(id);
+          onChange={(e) => {
+            toggleTaskStatus(id, e.target.checked);
           }}
         />{" "}
         <input
@@ -97,7 +101,7 @@ function TaskCard({
           }}
         />{" "}
         <button
-          disabled={editedTask.trim() === ""}
+          disabled={editedTask.trim() === "" || isSubmitting}
           onClick={() => {
             handleSave();
           }}
@@ -105,6 +109,7 @@ function TaskCard({
           Save
         </button>
         <button
+        disabled={isSubmitting}
           onClick={() => {
             handleCancel();
           }}

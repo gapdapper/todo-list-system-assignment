@@ -21,6 +21,10 @@
   width: 82%;
 }
 
+.error-text {
+  
+}
+
 .task-list {
   display: flex;
   flex-direction: column;
