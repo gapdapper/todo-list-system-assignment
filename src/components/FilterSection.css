@@ -1,0 +1,22 @@
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-button {
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.filter-button button {
+  width: 100%;
+}
+
+.filter-button .active-filter {
+    background-color: #363636;
+  color: white;
+  border-color: #363636;
+}

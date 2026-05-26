@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import TaskCard from "./components/TaskCard";
 import type { ITask, ITaskResponse } from "./types/Task";
-import SearchDocumentIcon from "./assets/search-document-icon.svg"
+import SearchDocumentIcon from "./assets/search-document-icon.svg";
 import {
   createTodo,
   deleteTodo,
@@ -11,6 +11,8 @@ import {
   updateTodo,
 } from "./services/todoApi";
 import TodoSkeleton from "./components/TodoSkeleton";
+import FilterSection from "./components/FilterSection";
+import type { FilterType } from "./types/Filter";
 
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
@@ -20,9 +22,7 @@ function App() {
   const [error, setError] = useState("");
 
   const [isShowFilter, setIsShowFilter] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<
-    "all" | "active" | "completed"
-  >("all");
+  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const filteredTaskList = useMemo(() => {
@@ -199,44 +199,12 @@ function App() {
           </button>
         </div>
         {isShowFilter && (
-          <div className="filter-section">
-            <input
-              type="text"
-              placeholder="Search tasks..."
-              value={searchKeyword}
-              onChange={(e) => {
-                setSearchKeyword(e.target.value);
-              }}
-            />
-            <div className="filter-button">
-              <button
-                className={activeFilter === "all" ? "active-filter" : ""}
-                onClick={() => {
-                  setActiveFilter("all");
-                }}
-              >
-                <i className="fa-solid fa-list"></i> All
-              </button>
-
-              <button
-                className={activeFilter === "active" ? "active-filter" : ""}
-                onClick={() => {
-                  setActiveFilter("active");
-                }}
-              >
-                <i className="fa-solid fa-hourglass-half"></i> Active
-              </button>
-
-              <button
-                className={activeFilter === "completed" ? "active-filter" : ""}
-                onClick={() => {
-                  setActiveFilter("completed");
-                }}
-              >
-                <i className="fa-solid fa-check-double"></i> Completed
-              </button>
-            </div>
-          </div>
+          <FilterSection
+            searchKeyword={searchKeyword}
+            setSearchKeyword={setSearchKeyword}
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
+          />
         )}
 
         {error && <p className="error-text">{error}</p>}
