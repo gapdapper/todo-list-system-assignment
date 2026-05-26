@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import TaskCard from "./components/TaskCard";
 import type { ITask, ITaskResponse } from "./types/Task";
+import SearchDocumentIcon from "./assets/search-document-icon.svg"
 import {
   createTodo,
   deleteTodo,
@@ -202,6 +203,7 @@ function App() {
             <input
               type="text"
               placeholder="Search tasks..."
+              value={searchKeyword}
               onChange={(e) => {
                 setSearchKeyword(e.target.value);
               }}
@@ -231,7 +233,7 @@ function App() {
                   setActiveFilter("completed");
                 }}
               >
-                <i className="fa-solid fa-check"></i> Completed
+                <i className="fa-solid fa-check-double"></i> Completed
               </button>
             </div>
           </div>
@@ -239,7 +241,17 @@ function App() {
 
         {error && <p className="error-text">{error}</p>}
         <div className="task-list">
-          {filteredTaskList.length != 0 &&
+          {filteredTaskList.length === 0 && (
+            <div className="empty-state">
+              <img
+                className="empty-state-image"
+                src={SearchDocumentIcon}
+                alt="No Tasks Found"
+              />
+              <p> No Tasks found</p>
+            </div>
+          )}
+          {filteredTaskList.length !== 0 &&
             filteredTaskList.map((task) => {
               return (
                 <TaskCard
