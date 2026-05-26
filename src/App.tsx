@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import TaskCard from "./components/TaskCard";
 import type { ITask, ITaskResponse } from "./types/Task";
@@ -17,6 +17,29 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [isShowFilter, setIsShowFilter] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<
+    "all" | "active" | "completed"
+  >("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const filteredTaskList = useMemo(() => {
+    return taskList.filter((task) => {
+      const matchesSearch = task.task
+        .toLocaleLowerCase()
+        .includes(searchKeyword.toLocaleLowerCase());
+
+      const matchesFilter =
+        activeFilter === "all"
+          ? true
+          : activeFilter === "active"
+            ? task.isDone === false
+            : task.isDone === true;
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [taskList, searchKeyword, activeFilter]);
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -141,6 +164,7 @@ function App() {
             type="text"
             name="task-input"
             className="task-input"
+            placeholder="Add new task"
             value={newTask}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -158,13 +182,65 @@ function App() {
               addTask();
             }}
           >
+            <i className="fa-solid fa-plus"></i>
             Add
           </button>
         </div>
+        <div className="tasks-header">
+          <p className="tasks-header-text">Tasks</p>
+          <button
+            onClick={() => {
+              setIsShowFilter((prev) => !prev);
+            }}
+          >
+            <i className="fa-solid fa-filter"></i>{" "}
+            {isShowFilter ? "Hide" : "Filters"}
+          </button>
+        </div>
+        {isShowFilter && (
+          <div className="filter-section">
+            <input
+              type="text"
+              placeholder="Search tasks..."
+              onChange={(e) => {
+                setSearchKeyword(e.target.value);
+              }}
+            />
+            <div className="filter-button">
+              <button
+                className={activeFilter === "all" ? "active-filter" : ""}
+                onClick={() => {
+                  setActiveFilter("all");
+                }}
+              >
+                <i className="fa-solid fa-list"></i> All
+              </button>
+
+              <button
+                className={activeFilter === "active" ? "active-filter" : ""}
+                onClick={() => {
+                  setActiveFilter("active");
+                }}
+              >
+                <i className="fa-solid fa-hourglass-half"></i> Active
+              </button>
+
+              <button
+                className={activeFilter === "completed" ? "active-filter" : ""}
+                onClick={() => {
+                  setActiveFilter("completed");
+                }}
+              >
+                <i className="fa-solid fa-check"></i> Completed
+              </button>
+            </div>
+          </div>
+        )}
+
         {error && <p className="error-text">{error}</p>}
         <div className="task-list">
-          {taskList.length != 0 &&
-            taskList.map((task) => {
+          {filteredTaskList.length != 0 &&
+            filteredTaskList.map((task) => {
               return (
                 <TaskCard
                   key={task.id}
