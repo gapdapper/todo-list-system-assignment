@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import TaskCard from "./components/TaskCard";
 import type { ITask, ITaskResponse } from "./types/Task";
@@ -13,34 +13,26 @@ import {
 import TodoSkeleton from "./components/TodoSkeleton";
 import FilterSection from "./components/FilterSection";
 import type { FilterType } from "./types/Filter";
+import useFilteredTasks from "./hooks/useFilteredTasks";
 
 function App() {
+  // tasks manipulate states
   const [taskList, setTaskList] = useState<ITask[]>([]);
   const [newTask, setNewTask] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // filter states
   const [isShowFilter, setIsShowFilter] = useState(false);
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const filteredTaskList = useMemo(() => {
-    return taskList.filter((task) => {
-      const matchesSearch = task.task
-        .toLocaleLowerCase()
-        .includes(searchKeyword.toLocaleLowerCase());
-
-      const matchesFilter =
-        activeFilter === "all"
-          ? true
-          : activeFilter === "active"
-            ? task.isDone === false
-            : task.isDone === true;
-
-      return matchesSearch && matchesFilter;
-    });
-  }, [taskList, searchKeyword, activeFilter]);
+  const filteredTaskList = useFilteredTasks(
+    taskList,
+    searchKeyword,
+    activeFilter,
+  );
 
   useEffect(() => {
     const loadTodos = async () => {
