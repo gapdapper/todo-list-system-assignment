@@ -1,4 +1,3 @@
-
 .checkbox {
   width: 20px;
   height: 20px;
@@ -8,15 +7,25 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  justify-content: space-around;
-  border: 1px solid black;
+    background: white;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border-radius: 4px;
   font-size: 18px;
   padding: 8px;
 }
 
-.task-text, .task-text-input {
-  width: 100%;
+.task-text {
   min-width: 0;
   overflow-wrap: break-word;
+  font-size: 18px;
 }
+
+.task-text, .task-text-input {
+  flex: 1;
+
+}
+
+.task-card .checkbox, .task-card button {
+  flex-shrink: 0;
+}
+

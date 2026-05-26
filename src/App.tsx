@@ -9,6 +9,7 @@ import {
   toggleTodo,
   updateTodo,
 } from "./services/todoApi";
+import TodoSkeleton from "./components/TodoSkeleton";
 
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
@@ -128,17 +129,13 @@ function App() {
   };
 
   if (loading) {
-    return (
-      <div className="container">
-        <h1>Loading . . .</h1>
-      </div>
-    );
+    return <TodoSkeleton numberOfCard={6} />;
   }
 
   return (
     <div className="container">
-      <div className="main-content">
-        <h2>Todo List System</h2>
+      <div className="main-section">
+        <h2 className="header">Todo List System</h2>
         <div className="input-section">
           <input
             type="text"
