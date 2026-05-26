@@ -1,7 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto&display=swap");
 html,
 body {
   margin: 0;
   padding: 0;
+}
+
+* {
+  font-family: "Inter", sans-serif;
+}
+
+input {
+  font-size: 18px;
+}
+
+button {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 0.375em;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #363636;
+  cursor: pointer;
+  display: inline-flex;
+  text-align: center;
+  padding: calc(0.5em - 1px) 1em;
+  font-size: 14px;
+}
+
+button:active {
+  border-color: #4a4a4a;
+  outline: 0;
+}
+
+button:focus {
+  border-color: #485fc7;
+  outline: 0;
+}
+
+button:hover {
+  border-color: #b5b5b5;
+}
+
+button:focus:not(:active) {
+  box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
+}
+
+button:disabled {
+  background-color: #f5f5f5;
+  border-color: #e5e5e5;
+  color: #9ca3af;
 }
 
 .container {
@@ -10,9 +59,6 @@ body {
   min-height: 100vh;
 }
 
-.main-section .header {
-  align-self: center;
-}
 
 .main-section {
   display: flex;
@@ -28,7 +74,11 @@ body {
 }
 
 .task-input {
-  width: 82%;
+  flex: 1;
+}
+
+.add-button {
+  flex-shrink: 0;
 }
 
 .error-text {
@@ -39,5 +89,3 @@ body {
   flex-direction: column;
   gap: 8px;
 }
-
-

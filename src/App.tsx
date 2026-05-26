@@ -135,7 +135,7 @@ function App() {
   return (
     <div className="container">
       <div className="main-section">
-        <h2 className="header">Todo List System</h2>
+        <h1 className="header">Todo List System</h1>
         <div className="input-section">
           <input
             type="text"
@@ -152,12 +152,13 @@ function App() {
             }}
           />
           <button
+            className="add-button"
             disabled={newTask.trim() === "" || isSubmitting}
             onClick={() => {
               addTask();
             }}
           >
-            Add Task
+            Add
           </button>
         </div>
         {error && <p className="error-text">{error}</p>}
