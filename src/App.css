@@ -83,6 +83,16 @@ button:disabled {
 }
 
 .error-text {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .tasks-header {

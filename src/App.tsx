@@ -199,9 +199,14 @@ function App() {
           />
         )}
 
-        {error && <p className="error-text">{error}</p>}
+        {error && (
+          <p className="error-text">
+            {" "}
+            <i className="fa-solid fa-circle-exclamation"></i> {error}
+          </p>
+        )}
         <div className="task-list">
-          {filteredTaskList.length === 0 && (
+          {!error && filteredTaskList.length === 0 && (
             <div className="empty-state">
               <img
                 className="empty-state-image"
