@@ -97,11 +97,11 @@ function App() {
           </p>
         )}
         {actionError && (
-  <div className="toast-error">
-    <i className="fa-solid fa-circle-exclamation"></i>
-    <span>{actionError}</span>
-  </div>
-)}
+          <div className="toast-error">
+            <i className="fa-solid fa-circle-exclamation"></i>
+            <span>{actionError}</span>
+          </div>
+        )}
         <div className="task-list">
           {!loadError && filteredTaskList.length === 0 && (
             <div className="empty-state">
@@ -113,12 +113,6 @@ function App() {
               <p> No Tasks found</p>
             </div>
           )}
-          {actionError && (
-  <div className="toast-error">
-    <i className="fa-solid fa-circle-exclamation"></i>
-    <span>{actionError}</span>
-  </div>
-)}
           {filteredTaskList.length !== 0 &&
             filteredTaskList.map((task) => {
               return (
