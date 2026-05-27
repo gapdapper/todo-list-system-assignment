@@ -1,73 +1,110 @@
-# React + TypeScript + Vite
+# Todo List System with API Integration
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple Todo application with API integration built using React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Add new tasks
+- Edit existing tasks
+- Delete tasks
+- Mark tasks as completed
+- Filter tasks
+- Search for tasks by keyword
+- Loading skeleton UI
+- Error handling for API requests
+- Responsive UI
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- Axios
+- CSS
+- FontAwesome
 
-## Expanding the ESLint configuration
+## How to run the project
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Clone the repository
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/gapdapper/todo-list-system-assignment.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Navigate to the project folder
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd todo-list-system-assignment
 ```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Run the development server
+
+```bash
+npm run dev
+```
+
+### 5. Open in browser
+
+```bash
+http://localhost:5173
+```
+
+## Thought Process
+
+The goal of this project was to create a simple and clean Todo application while focusing on frontend fundamentals and user experience.
+
+### Architecture & Structure
+
+The project was separated into:
+- Assets (images and other static assets)
+- Components (reusable React components)
+- Context (React Context API providers and shared state)
+- Hooks (custom React hooks)
+- Services (API and business logic)
+- Types (TypeScript type definitions)
+
+This structure helps improve maintainability and keeps responsibilities clearly separated.
+
+### API Handling
+
+Axios was used to handle API request because it provides a cleaner syntax, automatic JSON transformation, and easier error handling compared to the native Fetch API.
+
+API logic was separated into service files to avoid mixing networking logic with UI logic and to improve reusability.
+
+### State Management
+
+React Context API was used to centralize todo-related state and actions such as:
+- fetching todos
+- creating tasks
+- updating tasks
+- deleting tasks
+
+This helps keep API and state logic separated from presentation components and makes the codebase easier to scale in the future.
+
+Some states remain local because they are only used within a single component.
+
+### User Experience Highlights
+
+- Skeleton loading screen during initial fetch
+- Disabled actions while requests are processing
+- Separate handling for loading errors and action errors
+- Responsive layout for different screen sizes
+
+### Error Handling
+
+The application handles:
+- Failed API requests by displaying meaningful error messages
+- Invalid user input by disabling the submit button when necessary
+- Loading and action failures through toast error notifications
+
+This was done to provide better feedback and prevent unexpected UI behavior.
+
+## Author
+
+Puri Pongsomboonsuk
