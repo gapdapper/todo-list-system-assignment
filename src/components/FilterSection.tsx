@@ -10,7 +10,7 @@ interface FilterSectionProps {
   setActiveFilter: React.Dispatch<SetStateAction<FilterType>>;
 }
 
-function FilterSection({
+export function FilterSection({
   searchKeyword,
   setSearchKeyword,
   activeFilter,
@@ -58,4 +58,3 @@ function FilterSection({
   );
 }
 
-export default FilterSection;

@@ -9,7 +9,7 @@ interface TaskCardProps extends ITask {
   isSubmitting: boolean;
 }
 
-function TaskCard({
+export function TaskCard({
   id,
   task,
   isDone,
@@ -123,4 +123,3 @@ function TaskCard({
   }
 }
 
-export default TaskCard;

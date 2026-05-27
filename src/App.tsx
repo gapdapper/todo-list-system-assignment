@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./App.css";
-import TaskCard from "./components/TaskCard";
+import { FilterSection } from "./components/FilterSection";
+import { TaskCard } from "./components/TaskCard";
+import { TodoSkeleton } from "./components/TodoSkeleton";
+import { useFilteredTasks } from "./hooks/useFilteredTasks";
 import SearchDocumentIcon from "./assets/search-document-icon.svg";
-import TodoSkeleton from "./components/TodoSkeleton";
-import FilterSection from "./components/FilterSection";
 import type { FilterType } from "./types/Filter";
-import useFilteredTasks from "./hooks/useFilteredTasks";
 import { useTodo } from "./hooks/useTodo";
 
 function App() {

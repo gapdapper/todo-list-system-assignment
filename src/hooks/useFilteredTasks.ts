@@ -3,7 +3,7 @@ import type { FilterType } from "../types/Filter";
 import type { ITask } from "../types/Task";
 
 
-function useFilteredTasks (taskList: ITask[], searchKeyword: string, activeFilter: FilterType) {
+export function useFilteredTasks (taskList: ITask[], searchKeyword: string, activeFilter: FilterType) {
     return useMemo(() => {
         return taskList.filter((task) => {
           const matchesSearch = task.task
@@ -21,5 +21,3 @@ function useFilteredTasks (taskList: ITask[], searchKeyword: string, activeFilte
         });
       }, [taskList, searchKeyword, activeFilter]);
 }
-
-export default useFilteredTasks;

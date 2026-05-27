@@ -4,7 +4,7 @@ interface TodoSkeletonProps {
   numberOfCard: number;
 }
 
-function TodoSkeleton({ numberOfCard }: TodoSkeletonProps) {
+export function TodoSkeleton({ numberOfCard }: TodoSkeletonProps) {
   return (
     <div className="container">
       <div className="main-section skeleton-section">
@@ -34,4 +34,3 @@ function TodoSkeleton({ numberOfCard }: TodoSkeletonProps) {
   );
 }
 
-export default TodoSkeleton;
