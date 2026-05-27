@@ -5,7 +5,7 @@ import type { ITask } from "../types/Task";
 interface TaskCardProps extends ITask {
   toggleTaskStatus: (id: number, isDone: boolean) => void;
   deleteTask: (id: number) => void;
-  saveEditTask: (id: number, task: string) => void;
+  updateTask: (id: number, task: string) => void;
   isSubmitting: boolean;
 }
 
@@ -15,7 +15,7 @@ function TaskCard({
   isDone,
   toggleTaskStatus,
   deleteTask,
-  saveEditTask,
+  updateTask,
   isSubmitting,
 }: TaskCardProps) {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +34,7 @@ function TaskCard({
   const handleSave = () => {
     if (editedTask.trim() === "") return;
 
-    saveEditTask(id, editedTask);
+    updateTask(id, editedTask);
     setIsEditing(false);
   };
 
