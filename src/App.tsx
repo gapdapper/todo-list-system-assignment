@@ -51,7 +51,7 @@ function App() {
       } catch {
         setError("Failed to load todo list");
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
 
