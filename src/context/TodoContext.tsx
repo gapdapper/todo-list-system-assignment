@@ -5,7 +5,8 @@ interface TodoContextType {
   taskList: ITask[];
   newTask: string;
   loading: boolean;
-  error: string;
+  loadError: string;
+  actionError: string;
   isSubmitting: boolean;
   setNewTask: Dispatch<SetStateAction<string>>;
   addTask: () => Promise<void>;

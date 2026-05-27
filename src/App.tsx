@@ -19,7 +19,8 @@ function App() {
     taskList,
     newTask,
     loading,
-    error,
+    loadError,
+    actionError,
     isSubmitting,
     setNewTask,
     addTask,
@@ -89,14 +90,20 @@ function App() {
           />
         )}
 
-        {error && (
+        {loadError && (
           <p className="error-text">
             {" "}
-            <i className="fa-solid fa-circle-exclamation"></i> {error}
+            <i className="fa-solid fa-circle-exclamation"></i> {loadError}
           </p>
         )}
+        {actionError && (
+  <div className="toast-error">
+    <i className="fa-solid fa-circle-exclamation"></i>
+    <span>{actionError}</span>
+  </div>
+)}
         <div className="task-list">
-          {!error && filteredTaskList.length === 0 && (
+          {!loadError && filteredTaskList.length === 0 && (
             <div className="empty-state">
               <img
                 className="empty-state-image"
@@ -106,6 +113,12 @@ function App() {
               <p> No Tasks found</p>
             </div>
           )}
+          {actionError && (
+  <div className="toast-error">
+    <i className="fa-solid fa-circle-exclamation"></i>
+    <span>{actionError}</span>
+  </div>
+)}
           {filteredTaskList.length !== 0 &&
             filteredTaskList.map((task) => {
               return (

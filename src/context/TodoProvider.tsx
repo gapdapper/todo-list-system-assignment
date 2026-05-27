@@ -18,7 +18,8 @@ export function TodoProvider({ children }: TodoProviderProps) {
   const [newTask, setNewTask] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const [actionError, setActionError] = useState("");
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -35,7 +36,7 @@ export function TodoProvider({ children }: TodoProviderProps) {
 
         setTaskList(mappedTodos);
       } catch {
-        setError("Failed to load todo list");
+        setLoadError("Failed to load todo list");
       } finally {
         setLoading(false);
       }
@@ -43,6 +44,16 @@ export function TodoProvider({ children }: TodoProviderProps) {
 
     loadTodos();
   }, []);
+
+  useEffect(() => {
+    if (!actionError) return;
+
+    const timer = setTimeout(() => {
+      setActionError("");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [actionError]);
 
   const addTask = async () => {
     if (newTask.trim() === "") return;
@@ -58,10 +69,9 @@ export function TodoProvider({ children }: TodoProviderProps) {
         isDone: false,
       };
       setTaskList((prev) => [...prev, task]);
-      setNewTask("");
-      setError("");
+      setNewTask("")
     } catch {
-      setError("Failed to add new todo");
+      setActionError("Failed to add new todo");
     } finally {
       setIsSubmitting(false);
     }
@@ -83,9 +93,8 @@ export function TodoProvider({ children }: TodoProviderProps) {
             : t,
         ),
       );
-      setError("");
     } catch {
-      setError("Failed to set done todo");
+      setActionError("Failed to set done todo");
     } finally {
       setIsSubmitting(false);
     }
@@ -107,10 +116,8 @@ export function TodoProvider({ children }: TodoProviderProps) {
             : t,
         ),
       );
-
-      setError("");
     } catch {
-      setError("Failed to edit task");
+      setActionError("Failed to edit task");
     } finally {
       setIsSubmitting(false);
     }
@@ -122,9 +129,8 @@ export function TodoProvider({ children }: TodoProviderProps) {
       await deleteTodo(id);
 
       setTaskList((prev) => prev.filter((task) => task.id !== id));
-      setError("");
     } catch {
-      setError("Failed to delete task");
+      setActionError("Failed to delete task");
     } finally {
       setIsSubmitting(false);
     }
@@ -136,7 +142,8 @@ export function TodoProvider({ children }: TodoProviderProps) {
         taskList,
         newTask,
         loading,
-        error,
+        loadError,
+        actionError,
         isSubmitting,
         setNewTask,
         addTask,
