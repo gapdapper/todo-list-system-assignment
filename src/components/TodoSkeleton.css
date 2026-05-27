@@ -1,9 +1,8 @@
 .skeleton-header {
-  align-self: center;
-  width: 176px;
-  height: 20px;
+  width: 276px;
+  height: 26px;
   border-radius: 12px;
-  margin: 19px 0px;
+  margin: 32px 0px 40px 0px;
 }
 
 .skeleton-input-section,
@@ -13,7 +12,7 @@
 }
 
 .skeleton-card {
-  padding: 8px;
+  padding: 14px;
   border-radius: 4px;
   background: white;
   box-shadow:

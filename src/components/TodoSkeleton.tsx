@@ -13,6 +13,10 @@ function TodoSkeleton({ numberOfCard }: TodoSkeletonProps) {
           <div className="skeleton-input skeleton-content"></div>
           <div className="skeleton-add-button skeleton-content"></div>
         </div>
+        <div className="tasks-header">
+          <div className="skeleton-add-button skeleton-content"></div>
+          <div className="skeleton-add-button skeleton-content"></div>
+        </div>
         <div className="task-list">
           {Array(numberOfCard)
             .fill(1)
